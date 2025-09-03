@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расклад Таро</title>
+    <link rel="stylesheet" href="/styles17.css">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+SC&family=Comfortaa:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cookie&family=Great+Vibes&family=Pacifico&family=Tangerine:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <!-- Приветственное сообщение и поле для вопроса -->
+    <div id="welcome">
+        <h1>Расклад “Путешествие мечты” 🏆</h1>
+        <p><strong>Введите информацию о себе:</strong></p>
+        <input type="text" id="name" placeholder="Имя" maxlength="50" />
+        <input type="number" id="age" placeholder="Возраст" min="0" max="120" />
+        <input type="text" id="additional-info" placeholder="Дополнительная информация (не более 100 символов)"
+            maxlength="100" />
+        <button id="start-btn" disabled>Узнать расклад</button>
+    </div>
+    <!-- Контейнер для анимации карт -->
+    <div id="animation" style="display: none;"></div>
+
+    <div id="loading" style="display: none;">
+        <p id="loading-text">Получаем ответ на ваш запрос...</p>
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Контейнер для ответа -->
+    <div id="answer" style="display: none;">
+        <p id="answer-text"></p>
+        <div class="thank-container">
+            <button id="thank-btn" style="display: none;">Поблагодарить колоду (бесплатно)</button>
+            <p id="thanks-message" style="display: none;">Спасибо 😊</p>
+        </div>
+    </div>
+
+    <script async src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="cards.js"></script>
+    <script src="interpretations.js"></script>
+    <script>
+        const chatId = "{{ chat_id | default('') }}";
+    </script>
+    <script src="/script17.js"></script>
+    <script>
+        // Функция для убирания клавиатуры
+        function hideKeyboard() {
+            document.activeElement.blur(); // Убираем фокус с текущего поля
+            document.querySelectorAll('input').forEach(input => input.blur());
+        }
+
+        // Добавляем обработчик клика на фон страницы
+        document.body.addEventListener('click', (event) => {
+            const target = event.target;
+            // Проверяем, что клик был не по полю ввода и не по кнопке
+            if (!target.closest('input') && !target.closest('button')) {
+                hideKeyboard();
+            }
+        });
+
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Предотвращаем отправку формы
+                    hideKeyboard(); // Убираем клавиатуру
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,331 @@
+body {
+    font-family: 'Comfortaa', cursive;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-image: url('images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(16, 21, 54, 0.6);
+    z-index: -1;
+}
+
+#answer {
+    display: none;
+    /* Скрыт по умолчанию */
+    padding: 20px;
+    background: rgba(15, 15, 52, 0.6);
+    /* Единый темно-синий с прозрачностью 50% */
+    border-radius: 15px;
+    /* Закругленные углы для мягкости */
+    border: 2px solid #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    /* Тень для объема */
+    margin: 20px auto;
+    /* Центрирование с отступами */
+    width: 80%;
+    /* Ограничение ширины */
+    color: #ffffff;
+    /* Белый текст для читаемости */
+    font-family: 'Comfortaa', cursive;
+    /* Стильный шрифт */
+    opacity: 0;
+    /* Начальная прозрачность для анимации */
+    transform: translateY(20px);
+    /* Начальное смещение вниз */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    /* Плавная анимация */
+}
+
+#answer.show {
+    display: block;
+    /* Показываем контейнер */
+    opacity: 1;
+    /* Полная видимость */
+    transform: translateY(0);
+    /* Возвращаем на место */
+}
+
+#answer-text {
+    font-size: 18px;
+    /* Читаемый размер текста */
+    line-height: 1.6;
+    /* Удобный межстрочный интервал */
+    text-align: left;
+    /* Выравнивание текста */
+}
+
+#answer-text h2 {
+    font-size: 24px;
+    /* Размер заголовка */
+    margin-bottom: 15px;
+    /* Отступ снизу */
+    color: #ffffff;
+    /* Белый цвет заголовка */
+    text-align: center;
+    /* Центрирование заголовка */
+}
+
+#welcome {
+    padding: 20px;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+#animation {
+    position: relative;
+    min-height: 600px;
+    margin: 20px 0;
+    opacity: 0;
+    animation: fade-in 1s ease-in-out forwards;
+}
+
+.deck {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    opacity: 0;
+    animation: fade-in 1s ease-in-out forwards;
+}
+
+.deck img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* Стили для карт с 3D-переворотом */
+.card {
+    position: absolute;
+    perspective: 1000px;
+    /* Создает 3D-пространство */
+    opacity: 0;
+    animation: spread-out 2s ease-in-out forwards;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    /* Включает 3D для дочерних элементов */
+    transition: transform 0.6s ease-in-out;
+    /* Плавный переворот */
+}
+
+.card-back,
+.card-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    /* Скрывает обратную сторону при перевороте */
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+.card-back {
+    transform: rotateY(0deg);
+    /* Задняя сторона изначально видна */
+}
+
+.card-front {
+    transform: rotateY(180deg);
+    /* Лицевая сторона изначально скрыта */
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+    /* Переворот на 180 градусов */
+}
+
+.card-back img,
+.card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@keyframes spread-out {
+    0% {
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+#question {
+    width: 80%;
+    max-width: 400px;
+    padding: 12px 15px;
+    margin: 10px auto;
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    border: 2px solid #cac2c2;
+    border-radius: 10px;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#question:focus {
+    border-color: #f4ecec;
+    box-shadow: 0 4px 12px rgba(139, 127, 127, 0.3);
+}
+
+#start-btn {
+    display: block;
+    margin: 15px auto 0;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: 2px solid #ffffff;
+    font-family: 'Comfortaa', cursive;
+    background-color: #0f0f34;
+    color: rgb(255, 255, 255);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#start-btn:hover {
+    background-color: #0a0a3e;
+    transform: translateY(-1px);
+}
+
+#start-btn:active {
+    transform: translateY(0);
+}
+
+
+.divider {
+    width: 100%;
+    /* Маленькая длина линии */
+    height: 1px;
+    /* Тонкая линия */
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Полупрозрачный белый */
+    border: none;
+    /* Убираем стандартную границу */
+    margin: 15px auto;
+    /* Центрируем и добавляем отступы */
+}
+
+
+
+
+
+
+
+
+/* Существующие стили остаются без изменений, обновляем только связанные с кнопкой и текстом */
+
+/* Контейнер для кнопки и текста */
+.thank-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Стили для кнопки "Поблагодарить колоду" */
+#thank-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 16px;
+    background-color: #8a4af3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#thank-btn:hover {
+    background-color: #6a3ab2;
+}
+
+/* Стили для надписи "Спасибо 😊" */
+#thanks-message {
+    display: none;
+    margin: 10px 0 0 0;
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 14px;
+    color: #ffd700;
+    /* Золотой цвет для радости */
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+
+
+
+
+
+#loading {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+#loading-text {
+    margin: 0;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 4px solid #f3f3f3; /* Светлый фон */
+    border-top: 4px solid #000000; /* Цвет вращения */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 10px auto; /* Центрируем */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
